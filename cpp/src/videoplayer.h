@@ -11,6 +11,12 @@ class VideoPlayer {
  private:
   VideoLibrary mVideoLibrary;
 
+  // video playing == true
+  bool playingStatus = false;
+
+  //title of video be played
+  std::string playingVideoT = "";
+
  public:
   VideoPlayer() = default;
 

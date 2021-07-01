@@ -1,5 +1,5 @@
 #include "videoplayer.h"
-
+#include "vector"
 #include <iostream>
 
 void VideoPlayer::numberOfVideos() {
@@ -8,15 +8,56 @@ void VideoPlayer::numberOfVideos() {
 }
 
 void VideoPlayer::showAllVideos() {
-  std::cout << "showAllVideos needs implementation" << std::endl;
+  std::cout << "Here's a list of all available videos:" << std::endl;
+
+  //loop on each video in library
+  for(auto v: mVideoLibrary.getVideos())
+  {
+    //print title and id
+    std::cout<<v.getTitle()<<" "<<"("<<v.getVideoId()<<")"<<"  [";
+
+    //loop on tags
+    for(auto s: v.getTags())
+    {
+      std::cout<<s<<" ";
+    }
+
+    std::cout<<"]\n";
+  }
+  
 }
 
 void VideoPlayer::playVideo(const std::string& videoId) {
-  std::cout << "playVideo needs implementation" << std::endl;
+
+  const Video* video = mVideoLibrary.getVideo(videoId);
+
+  if(video == nullptr)
+  {
+    std::cout<<"Cannot play video: Video does not exist\n";
+  }
+  else
+  {
+    if(playingStatus)
+    {
+      stopVideo();
+    }
+    else
+    {
+      playingVideoT = video->getTitle();
+      playingStatus = true;
+      std::cout<<"Playing video: "<<playingVideoT<<std::endl;
+    }
+  }
+
+  delete video;
 }
 
 void VideoPlayer::stopVideo() {
-  std::cout << "stopVideo needs implementation" << std::endl;
+
+  std::cout<<"Stopping video: "<<playingVideoT<<std::endl;
+  playingStatus = false;
+  playingVideoT = "";
+
 }
 
 void VideoPlayer::playRandomVideo() {
