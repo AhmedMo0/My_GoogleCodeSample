@@ -11,11 +11,22 @@ class VideoPlayer {
  private:
   VideoLibrary mVideoLibrary;
 
+  // playing video object
+  Video playingVideo;
   // video playing == true
   bool playingStatus = false;
 
   //title of video be played
   std::string playingVideoT = "";
+
+  //all available videos
+  std::vector<Video> videos = mVideoLibrary.getVideos();
+
+   // video pasued == true
+  bool pauseStatus = false;
+
+  //title of video be played
+  std::string pasuedVideoT = "";
 
  public:
   VideoPlayer() = default;

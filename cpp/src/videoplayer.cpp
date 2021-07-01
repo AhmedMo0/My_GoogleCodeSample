@@ -1,6 +1,8 @@
 #include "videoplayer.h"
-#include "vector"
 #include <iostream>
+#include <stdlib.h>
+
+
 
 void VideoPlayer::numberOfVideos() {
   std::cout << mVideoLibrary.getVideos().size() << " videos in the library"
@@ -46,6 +48,8 @@ void VideoPlayer::playVideo(const std::string& videoId) {
       playingVideoT = video->getTitle();
       playingStatus = true;
       std::cout<<"Playing video: "<<playingVideoT<<std::endl;
+
+      playingVideo = *video;
     }
   }
 
@@ -61,19 +65,49 @@ void VideoPlayer::stopVideo() {
 }
 
 void VideoPlayer::playRandomVideo() {
-  std::cout << "playRandomVideo needs implementation" << std::endl;
+  int randomNum = rand() % videos.size();
+
+  Video tmpVideo = videos[randomNum];
+
+  playVideo(tmpVideo.getVideoId()); 
+
 }
 
 void VideoPlayer::pauseVideo() {
-  std::cout << "pauseVideo needs implementation" << std::endl;
+  if(pauseStatus)
+  {
+    std::cout << "Video already paused: "<<pasuedVideoT<< std::endl;
+  }
+  else
+  {
+    pasuedVideoT = playingVideoT;
+    pauseStatus = true;
+    std::cout << "Pausing video: "<<pasuedVideoT<< std::endl;
+
+  }
 }
 
 void VideoPlayer::continueVideo() {
-  std::cout << "continueVideo needs implementation" << std::endl;
+  if(pauseStatus)
+  {
+    std::cout<<"Continuing video: "<<pasuedVideoT<<std::endl;
+    pauseStatus = false;
+    pasuedVideoT = "";
+  }
+  else
+  {
+    std::cout<<"Cannot continue video: Video is not paused"<<std::endl;
+  }
 }
 
 void VideoPlayer::showPlaying() {
-  std::cout << "showPlaying needs implementation" << std::endl;
+  std::cout << "Currently playing: " << playingVideo.getTitle()<<" ("<<playingVideo.getVideoId()<<") ";
+  for(auto v: playingVideo.getTags())
+  {
+    std::cout<<v<<" ";
+  }
+  std::cout<<"\n";
+  
 }
 
 void VideoPlayer::createPlaylist(const std::string& playlistName) {
